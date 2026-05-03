@@ -429,7 +429,13 @@ function handleCode(code){
     const item=items.find(function(i){return i.barcode===code;});
     if(item)consumeOne(item.id);else toast("⚠️ Produkt nicht gefunden",true);
   } else {
-    document.getElementById("f-barcode").value=code;fetchProduct(code);
+    const existing=items.find(function(i){return i.barcode===code;});
+    if(existing){
+      openDetail(existing.id);
+      toast("✓ "+existing.name+" gefunden – Ablaufdatum eintragen");
+    } else {
+      document.getElementById("f-barcode").value=code;fetchProduct(code);
+    }
   }
 }
 
